@@ -16,6 +16,7 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
+        // Replaced System.out.println with logger at the appropriate level
         logger.info("** Starting Maze Runner");
 
         // Set up the command line options
@@ -24,11 +25,12 @@ public class Main {
 
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
-
+        
         try {
             // Parse the command-line arguments
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
+            // Log the error if argument parsing fails
             logger.error("Error parsing command-line arguments: " + e.getMessage());
             System.exit(1);
         }
@@ -43,17 +45,18 @@ public class Main {
                 while ((line = reader.readLine()) != null) {
                     for (int idx = 0; idx < line.length(); idx++) {
                         if (line.charAt(idx) == '#') {
-                            System.out.print("WALL ");
+                            System.out.print("WALL");
                         } else if (line.charAt(idx) == ' ') {
-                            System.out.print("PASS ");
+                            System.out.print("PASS");
                         }
                     }
                     System.out.print(System.lineSeparator());
                 }
             } catch (Exception e) {
-                logger.error("/!\\ An error has occurred while reading the maze file /!\\");
+                logger.error("An error has occurred while reading the maze file: " + e.getMessage());
             }
         } else {
+            // Log an error if the -i flag is not provided
             logger.error("No input maze file specified. Please provide one using the -i flag.");
             System.exit(1);
         }
