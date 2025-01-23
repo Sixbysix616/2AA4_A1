@@ -11,6 +11,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
@@ -45,13 +46,23 @@ public class Main {
                 while ((line = reader.readLine()) != null) {
                     for (int idx = 0; idx < line.length(); idx++) {
                         if (line.charAt(idx) == '#') {
-                            System.out.print("WALL");
-                        } else if (line.charAt(idx) == ' ') {
-                            System.out.print("PASS");
-                        }
+                        System.out.print("WALL ");
+                    } else if (line.charAt(idx) == ' ') {
+                        System.out.print("PASS ");
                     }
-                    System.out.print(System.lineSeparator());
                 }
+                System.out.print(System.lineSeparator());
+            }
+
+                // Create Maze instance from the maze file string
+                Maze maze = new Maze(mazeFile);
+
+                // Create an MVPExplorer to explore the maze
+                Explorer explorer = new MVPExplorer(maze);
+                explorer.explore();  // Start the exploration
+                logger.info("**** Computing path");
+                logger.info("Path: " + String.join(" ", explorer.getPath()));
+        //logger.info("PATH NOT COMPUTED");
             } catch (Exception e) {
                 logger.error("An error has occurred while reading the maze file: " + e.getMessage());
             }
@@ -61,8 +72,7 @@ public class Main {
             System.exit(1);
         }
 
-        logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
+
         logger.info("** End of MazeRunner");
     }
 }

@@ -34,7 +34,7 @@ public class Maze {
     private void findStartAndEnd() {
 
         for (int i = 0; i < maze.length; i++) {
-            if (maze[i][0] == ' ') {  // 起点
+            if (maze[i][0] == ' ') { //start
                 startX = i;
                 startY = 0;
             }
