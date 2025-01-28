@@ -41,6 +41,7 @@ public class Main {
             String mazeFile = cmd.getOptionValue("i");
             try {
                 logger.info("**** Reading the maze from file " + mazeFile);
+                logger.info("**** right hand explorer test v0.4");
                 BufferedReader reader = new BufferedReader(new FileReader(mazeFile));
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -58,12 +59,15 @@ public class Main {
                 Maze maze = new Maze(mazeFile);
 
                 // Create an MVPExplorer to explore the maze
-                Explorer explorer = new MVPExplorer(maze);
+                Explorer explorer = new RightHandExplorer(maze);
                 explorer.explore();  // Start the exploration
                 logger.info("**** Computing path");
                 logger.info("Path: " + String.join(" ", explorer.getPath()));
+                logger.info("Steps:"+ explorer.getSteps());
         //logger.info("PATH NOT COMPUTED");
             } catch (Exception e) {
+                Throwable cause = e.getCause();
+                cause.printStackTrace();
                 logger.error("An error has occurred while reading the maze file: " + e.getMessage());
             }
         } else {

@@ -38,4 +38,8 @@ public abstract class Explorer {
     public List<String> getPath() {
         return path;
     }
+
+    public int getSteps(){
+        return stepsTaken;
+    }
 }
