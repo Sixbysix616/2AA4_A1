@@ -36,7 +36,30 @@ public abstract class Explorer {
 
     // Get the path taken by the explorer
     public List<String> getPath() {
-        return path;
+        List<String> compressedPath = new ArrayList<>();
+        int count = 1;
+        for (int i = 1; i < path.size(); i++) {
+            // If the current step is the same as the previous one
+            if (path.get(i).equals(path.get(i - 1))) {
+                count++;
+            } else {
+                // If the direction changes, add the previous count and direction
+                if (count > 1) {
+                    compressedPath.add(count + path.get(i - 1));  // Add count + direction
+                } else {
+                    compressedPath.add(path.get(i - 1));  // Add just the direction
+                }
+                count = 1;  // Reset the count for the new direction
+            }
+        }
+
+        if (count > 1) {
+            compressedPath.add(count + path.get(path.size() - 1));
+        } else {
+            compressedPath.add(path.get(path.size() - 1));
+        }
+
+        return compressedPath;
     }
 
     public int getSteps(){

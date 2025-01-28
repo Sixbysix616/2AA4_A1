@@ -41,7 +41,7 @@ public class Main {
             String mazeFile = cmd.getOptionValue("i");
             try {
                 logger.info("**** Reading the maze from file " + mazeFile);
-                logger.info("**** right hand explorer test v0.4");
+                logger.info("**** right hand explorer test v0.5");
                 BufferedReader reader = new BufferedReader(new FileReader(mazeFile));
                 String line;
                 while ((line = reader.readLine()) != null) {
