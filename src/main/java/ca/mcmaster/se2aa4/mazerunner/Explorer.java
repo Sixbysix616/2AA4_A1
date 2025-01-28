@@ -34,6 +34,67 @@ public abstract class Explorer {
         return x == maze.getEndX() && y == maze.getEndY();
     }
 
+    public boolean move(List<String> path){
+        int currentX = maze.getStartX();
+        int currentY = maze.getStartY();
+        int currentDirection = 1;// Start facing right (East)
+
+            for (String instruction : path) {
+        // Check if the instruction involves a number (e.g., "5F", "2F")
+        if (instruction.matches("\\d+[FLR]")) {
+            int repeatCount = Integer.parseInt(instruction.replaceAll("[^0-9]", ""));
+            char direction = instruction.charAt(instruction.length() - 1);
+            
+            // Repeat the movement based on the number
+            for (int i = 0; i < repeatCount; i++) {
+                if (direction == 'F') {
+                    // Move forward
+                    if (isValidMove(currentX + DX[currentDirection], currentY + DY[currentDirection])) {
+                        currentX += DX[currentDirection];
+                        currentY += DY[currentDirection];
+                    } else {
+                        return false; // Invalid move (blocked path)
+                    }
+                } else if (direction == 'R') {
+                    // Turn right
+                    currentDirection = (currentDirection + 1) % 4;
+                } else if (direction == 'L') {
+                    // Turn left
+                    currentDirection = (currentDirection + 3) % 4;
+                }
+                
+                // After each movement, check if at exit
+                if (isAtExit(currentX, currentY)) {
+                    return true;
+                }
+            }
+        } else {
+            // Single step instruction like "R", "L", or "F"
+            if (instruction.equals("F")) {
+                if (isValidMove(currentX + DX[currentDirection], currentY + DY[currentDirection])) {
+                    currentX += DX[currentDirection];
+                    currentY += DY[currentDirection];
+                } else {
+                    return false; // Invalid move (blocked path)
+                }
+            } else if (instruction.equals("R")) {
+                // Turn right
+                currentDirection = (currentDirection + 1) % 4;
+            } else if (instruction.equals("L")) {
+                // Turn left
+                currentDirection = (currentDirection - 1 + 4) % 4;
+            }
+
+            // After each movement, check if at exit
+            if (isAtExit(currentX, currentY)) {
+                return true;
+            }
+        }
+    }
+        return isAtExit(currentX, currentY);
+
+    }
+
     // Get the path taken by the explorer
     public List<String> getPath() {
         List<String> compressedPath = new ArrayList<>();

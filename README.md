@@ -40,8 +40,8 @@ The starter code assumes the maze file name is the first argument.
 
 ```
 mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txt
-** Starting Maze Runner
-**** Reading the maze from file ./examples/small.maz.txt
+## Starting Maze Runner
+#### Reading the maze from file ./examples/small.maz.txt
 WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
 WALL PASS PASS PASS PASS PASS PASS PASS PASS PASS WALL 
 WALL WALL WALL PASS WALL WALL WALL PASS WALL WALL WALL 
@@ -53,21 +53,21 @@ WALL PASS PASS PASS WALL PASS PASS PASS PASS PASS WALL
 PASS PASS WALL PASS WALL PASS WALL WALL WALL PASS WALL 
 WALL PASS WALL PASS WALL PASS WALL PASS PASS PASS WALL 
 WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL WALL 
-**** Computing path
+#### Computing path
 PATH NOT COMPUTED
-** End of MazeRunner
+## End of MazeRunner
 ```
 
 When called on a non-existing file. it prints an error message
 
 ```
 mosser@azrael A1-Template % java -jar target/mazerunner.jar ./examples/small.maz.txtd
-** Starting Maze Runner
-**** Reading the maze from file ./examples/small.maz.txtd
+## Starting Maze Runner
+#### Reading the maze from file ./examples/small.maz.txtd
 /!\ An error has occured /!\
-**** Computing path
+#### Computing path
 PATH NOT COMPUTED
-** End of MazeRunner
+## End of MazeRunner
 ```
 
 ### Delivered version
