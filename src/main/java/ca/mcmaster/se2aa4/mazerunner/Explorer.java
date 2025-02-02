@@ -39,8 +39,6 @@ public abstract class Explorer {
         int currentY = maze.getStartY();
         int currentDirection = 1;// Start facing right (East)
 
-        System.out.println("Received pathList: " + path);
-
             for (String instruction : path) {
                 
               // Check if the instruction involves a number (e.g., "5F", "2F")
@@ -56,10 +54,8 @@ public abstract class Explorer {
                               // Move forward
                             if (isValidMove(nextX, nextY)) {
                                 currentX = nextX;
-                                currentY = nextY;
-                                System.out.println("Moved to: (" + currentX + ", " + currentY + ")");
-                            }else {
-                                System.out.println("Blocked at: (" + nextX + ", " + nextY + ")");
+                                currentY = nextY;  
+                            }else { 
                                 return false; // Invalid move (blocked path)
                             }
                 }       else if (direction == 'R') {
@@ -81,11 +77,9 @@ public abstract class Explorer {
                 if (isValidMove(currentX + DX[currentDirection], currentY + DY[currentDirection])) {
                     currentX += DX[currentDirection];
                     currentY += DY[currentDirection];
-                    System.out.println("Moved to: (" + currentX + ", " + currentY + ")");
 
 
                 } else {
-                    System.out.println("Blocked at: (" + currentX + DX[currentDirection] + ", " + currentY + DY[currentDirection] + ")");
                     return false; // Invalid move (blocked path)
                 }
             } else if (instruction.equals("R")) {

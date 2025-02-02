@@ -101,9 +101,7 @@ public class Main {
                 Explorer explorer = new RightHandExplorer(maze);
                 explorer.explore();  // Start the exploration
                 logger.info("**** Computing path");
-                logger.info("Path: " + String.join(" ", explorer.getPath()));
-                logger.info("Steps:"+ explorer.getSteps());
-        //logger.info("PATH NOT COMPUTED");
+                System.out.println("Path: " + String.join(" ", explorer.getPath()));
             }catch (Exception e) {
                 logger.error("An error has occurred while reading the maze file: " + e.getMessage());
             }
@@ -116,18 +114,19 @@ public class Main {
         if (cmd.hasOption("i") && cmd.hasOption("p")){
             String mazeFile = cmd.getOptionValue("i");
             String[] pathArray = cmd.getOptionValues("p");
-            List<String> pathList = new ArrayList<>(Arrays.asList(pathArray));
+            String path = String.join(" ", pathArray);
+            String pathWithSpaces = path.replaceAll("([A-Za-z])", "$1 ");
+            pathWithSpaces = pathWithSpaces.trim();
+            String[] pathArrayWithSpaces = pathWithSpaces.split(" ");
+            List<String> pathList = new ArrayList<>(Arrays.asList(pathArrayWithSpaces));
 
-            logger.info("Path checking mode");
-            try{
-                logger.info("**** Reading the maze from file " + mazeFile);
-                logger.info("**** check path test v0.7");               
+            try{             
                 Maze maze = new Maze(mazeFile);
                 Explorer explorer = new RightHandExplorer(maze);
                 if(explorer.move(pathList)){
-                    logger.info("correct path");
+                    System.out.println("correct path");
                 }else{
-                    logger.info("incorrect path");
+                    System.out.println("incorrect path");
                 }
 
             }catch(Exception e){
