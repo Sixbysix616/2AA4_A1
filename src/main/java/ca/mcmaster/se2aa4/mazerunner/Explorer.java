@@ -39,26 +39,33 @@ public abstract class Explorer {
         int currentY = maze.getStartY();
         int currentDirection = 1;// Start facing right (East)
 
+        System.out.println("Received pathList: " + path);
+
             for (String instruction : path) {
-        // Check if the instruction involves a number (e.g., "5F", "2F")
-        if (instruction.matches("\\d+[FLR]")) {
-            int repeatCount = Integer.parseInt(instruction.replaceAll("[^0-9]", ""));
-            char direction = instruction.charAt(instruction.length() - 1);
+                
+              // Check if the instruction involves a number (e.g., "5F", "2F")
+                if (instruction.matches("\\d+[FLR]")) {
+                    int repeatCount = Integer.parseInt(instruction.replaceAll("[^0-9]", ""));
+                    char direction = instruction.charAt(instruction.length() - 1);
             
             // Repeat the movement based on the number
-            for (int i = 0; i < repeatCount; i++) {
-                if (direction == 'F') {
-                    // Move forward
-                    if (isValidMove(currentX + DX[currentDirection], currentY + DY[currentDirection])) {
-                        currentX += DX[currentDirection];
-                        currentY += DY[currentDirection];
-                    } else {
-                        return false; // Invalid move (blocked path)
-                    }
-                } else if (direction == 'R') {
+                    for (int i = 0; i < repeatCount; i++) {
+                        if (direction == 'F') {
+                             int nextX = currentX + DX[currentDirection];
+                             int nextY = currentY + DY[currentDirection];
+                              // Move forward
+                            if (isValidMove(nextX, nextY)) {
+                                currentX = nextX;
+                                currentY = nextY;
+                                System.out.println("Moved to: (" + currentX + ", " + currentY + ")");
+                            }else {
+                                System.out.println("Blocked at: (" + nextX + ", " + nextY + ")");
+                                return false; // Invalid move (blocked path)
+                            }
+                }       else if (direction == 'R') {
                     // Turn right
-                    currentDirection = (currentDirection + 1) % 4;
-                } else if (direction == 'L') {
+                           currentDirection = (currentDirection + 1) % 4;
+                }       else if (direction == 'L') {
                     // Turn left
                     currentDirection = (currentDirection + 3) % 4;
                 }
@@ -74,7 +81,11 @@ public abstract class Explorer {
                 if (isValidMove(currentX + DX[currentDirection], currentY + DY[currentDirection])) {
                     currentX += DX[currentDirection];
                     currentY += DY[currentDirection];
+                    System.out.println("Moved to: (" + currentX + ", " + currentY + ")");
+
+
                 } else {
+                    System.out.println("Blocked at: (" + currentX + DX[currentDirection] + ", " + currentY + DY[currentDirection] + ")");
                     return false; // Invalid move (blocked path)
                 }
             } else if (instruction.equals("R")) {
@@ -82,7 +93,7 @@ public abstract class Explorer {
                 currentDirection = (currentDirection + 1) % 4;
             } else if (instruction.equals("L")) {
                 // Turn left
-                currentDirection = (currentDirection - 1 + 4) % 4;
+                currentDirection = (currentDirection +3) % 4;
             }
 
             // After each movement, check if at exit

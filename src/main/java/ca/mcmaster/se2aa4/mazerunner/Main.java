@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
@@ -28,7 +29,7 @@ public class Main {
         // Set up the command line options
         Options options = new Options();
         options.addOption("i", true, "Input maze file");
-        options.addOption("p",true,"Input path");
+        options.addOption(Option.builder("p").hasArgs().desc("Path commands").build());
 
 
         CommandLineParser parser = new DefaultParser();
@@ -114,14 +115,13 @@ public class Main {
 
         if (cmd.hasOption("i") && cmd.hasOption("p")){
             String mazeFile = cmd.getOptionValue("i");
-            String path = cmd.getOptionValue("p");
-            String[] pathArray = path.split(" ");
+            String[] pathArray = cmd.getOptionValues("p");
             List<String> pathList = new ArrayList<>(Arrays.asList(pathArray));
 
             logger.info("Path checking mode");
             try{
                 logger.info("**** Reading the maze from file " + mazeFile);
-                logger.info("**** check path test v0.4");               
+                logger.info("**** check path test v0.7");               
                 Maze maze = new Maze(mazeFile);
                 Explorer explorer = new RightHandExplorer(maze);
                 if(explorer.move(pathList)){
