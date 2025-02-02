@@ -101,7 +101,7 @@ public class Main {
                 logger.info("**** Computing path");
                 System.out.println("Path: " + String.join(" ", explorer.getPath()));
             }catch (Exception e) {
-                logger.error("An error has occurred while reading the maze file: " + e.getMessage());
+                System.err.println("An error has occurred while reading the maze file: " + e.getMessage());
             }
         } else if (!cmd.hasOption("i")){
             // Log an error if the -i flag is not provided
