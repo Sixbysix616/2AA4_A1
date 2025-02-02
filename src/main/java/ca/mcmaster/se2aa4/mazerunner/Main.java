@@ -48,15 +48,13 @@ public class Main {
         if (cmd.hasOption("i") && cmd.getOptions().length == 1) {
             String mazeFile = cmd.getOptionValue("i");
             try {
-                logger.info("**** Reading the maze from file " + mazeFile);
-                logger.info("**** right hand explorer test v0.17");
                 BufferedReader reader = new BufferedReader(new FileReader(mazeFile));
                 StringBuilder modifiedContent = new StringBuilder();
                 
                 String line = reader.readLine();
                 int width = line.length();  
                 
-                for (int j = 0; j < width; j++){
+                for (int j = 0; j < width; j++){    //Print the first line
                     char currentChar = line.charAt(j);
                         if (currentChar == '#') {   
                             System.out.print("WALL ");
@@ -107,7 +105,7 @@ public class Main {
             }
         } else if (!cmd.hasOption("i")){
             // Log an error if the -i flag is not provided
-            logger.error("No input maze file specified. Please provide one using the -i flag.");
+            System.err.println("No input maze file specified. Please provide one using the -i flag.");
             System.exit(1);
         }
 
@@ -122,6 +120,25 @@ public class Main {
 
             try{             
                 Maze maze = new Maze(mazeFile);
+                BufferedReader reader = new BufferedReader(new FileReader(mazeFile));
+                StringBuilder modifiedContent = new StringBuilder();
+        
+                String line = reader.readLine();
+                int width = line.length();  
+                modifiedContent.append(line).append(System.lineSeparator());
+
+                while ((line = reader.readLine()) != null) {
+                       if (line.length() < width) {
+                           for (int i = line.length(); i < width; i++) {
+                                line += " ";
+                            }
+                    } modifiedContent.append(line).append(System.lineSeparator());               
+                }
+        
+      
+                BufferedWriter writer = new BufferedWriter(new FileWriter(mazeFile));
+                writer.write(modifiedContent.toString());
+                writer.close();
                 Explorer explorer = new RightHandExplorer(maze);
                 if(explorer.move(pathList)){
                     System.out.println("correct path");
@@ -130,7 +147,7 @@ public class Main {
                 }
 
             }catch(Exception e){
-                logger.error("An error has occurred while reading the maze file: " + e.getMessage());
+                System.err.println("An error has occurred while reading the maze file: " + e.getMessage());
             }
 
 
