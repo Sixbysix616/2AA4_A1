@@ -8,6 +8,10 @@ public class MVPExplorer extends Explorer {
         this.currentDirection = 1; // Start facing right (East)
     }
     
+    public int getStepsTaken() {
+        return stepsTaken;
+      }
+    
 
     @Override
     public void explore() {
