@@ -140,6 +140,7 @@ public class Main {
                 writer.write(modifiedContent.toString());
                 writer.close();
                 Explorer explorer = new RightHandExplorer(maze);
+                explorer.addObserver(new ExplorerLogger());//Log observer
                 if(explorer.move(pathList)){
                     System.out.println("correct path");
                 }else{

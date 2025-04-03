@@ -14,6 +14,21 @@ public abstract class Explorer {
     // The path taken by the explorer (for printing purposes)
     protected List<String> path;
 
+//This part is added Observer design pattern
+    private final List<ExplorerObserver> observers = new ArrayList<>();
+
+
+    public void addObserver(ExplorerObserver observer) {
+        observers.add(observer);
+    }
+
+
+    protected void notifyObservers(String action, int x, int y) {
+    for (ExplorerObserver observer : observers) {
+        observer.onStep(action, x, y);
+        }
+    }
+
     // Constructor
     public Explorer(Maze maze) {
         this.maze = maze;
@@ -55,15 +70,18 @@ public abstract class Explorer {
                             if (isValidMove(nextX, nextY)) {
                                 currentX = nextX;
                                 currentY = nextY;  
+                                notifyObservers("F", currentX, currentY);
                             }else { 
                                 return false; // Invalid move (blocked path)
                             }
                 }       else if (direction == 'R') {
                     // Turn right
                            currentDirection = (currentDirection + 1) % 4;
+                           notifyObservers("R", currentX, currentY);
                 }       else if (direction == 'L') {
                     // Turn left
-                    currentDirection = (currentDirection + 3) % 4;
+                            currentDirection = (currentDirection + 3) % 4;
+                            notifyObservers("L", currentX, currentY);
                 }
                 
                 // After each movement, check if at exit
