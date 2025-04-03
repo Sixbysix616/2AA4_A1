@@ -43,7 +43,7 @@ public class RightHandExplorer extends Explorer {
         }
     }
 
-    private boolean checkRightWall(int currentX, int currentY) {
+    public boolean checkRightWall(int currentX, int currentY) {
         // Determine the direction to the right of the current direction
         int rightDirection = (currentDirection + 1) % 4; // Right side direction
         int rightX = currentX + DX[rightDirection];
