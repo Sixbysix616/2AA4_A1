@@ -139,7 +139,7 @@ public class Main {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(mazeFile));
                 writer.write(modifiedContent.toString());
                 writer.close();
-                Explorer explorer = new RightHandExplorer(maze);
+                Explorer explorer = ExplorerFactory.createExplorer("RightHand", maze);//Use factory to create explorer
                 explorer.addObserver(new ExplorerLogger());//Log observer
                 if(explorer.move(pathList)){
                     System.out.println("correct path");
